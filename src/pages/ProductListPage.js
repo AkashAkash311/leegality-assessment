@@ -44,15 +44,14 @@ function ProductListPage() {
 
   // productDetails is undefined until the first response arrives
   const products = productDetails?.products ?? [];
-  const totalPages = Math.ceil((productDetails?.total ?? 0) / 30);
+  const totalPages = Math.ceil((productDetails?.total ?? 0) / 10);
 
   // functions
 
   // get product api's
   const loadProducts = async () => {
     try {
-      const productDetails = await getApiCaller(`/products?limit=30&skip=${(page - 1) * 30}`);
-      console.log("trertrertrertreertre", productDetails);
+      const productDetails = await getApiCaller(`/products?limit=10&skip=${(page - 1) * 10}`);
       setProductDetails(productDetails);
     } catch (e) {
       console.log("get Product api callerr", e);
@@ -60,7 +59,7 @@ function ProductListPage() {
   };
   useEffect(() => {
     loadProducts();
-  }, [])
+  }, [page])
 
   return (
     <main style={styles.listing}>
@@ -73,7 +72,7 @@ function ProductListPage() {
           <p style={styles.summary}>Showing {products.length} products</p>
         </div>
         <ProductGrid products={products} />
-        <Pagination currentPage={page} totalPages={totalPages} />
+        <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
       </section>
     </main>
   );
