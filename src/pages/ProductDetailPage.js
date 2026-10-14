@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getApiCaller } from '../api';
 import Button from '../components/Button';
 import Rating from '../components/Rating';
@@ -124,6 +124,7 @@ const styles = {
 function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   //states
   const [product, setProduct] = useState(null);
@@ -150,9 +151,11 @@ function ProductDetailPage() {
     loadProduct();
   }, [id]);
 
-  // going back in history keeps the listing page as it was
+  // going back in history keeps the listing page (and its filters) as it was.
+  // If the product link was opened directly there is no listing to go back to.
   const handleBack = () => {
-    navigate(-1);
+    if (location.state?.fromListing) navigate(-1);
+    else navigate('/');
   };
 
   if (loading) {

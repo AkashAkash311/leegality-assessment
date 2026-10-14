@@ -1,4 +1,3 @@
-import { useHover } from '../hooks/useHover';
 import { colors, radius } from '../theme';
 
 const styles = {
@@ -14,10 +13,6 @@ const styles = {
     color: colors.text,
     fontSize: '0.9rem',
   },
-  defaultHover: {
-    border: `1px solid ${colors.primary}`,
-    color: colors.primary,
-  },
   primary: {
     padding: '8px 14px',
     background: colors.primary,
@@ -26,10 +21,6 @@ const styles = {
     color: '#fff',
     fontSize: '0.9rem',
   },
-  primaryHover: {
-    background: colors.primaryDark,
-    border: `1px solid ${colors.primaryDark}`,
-  },
   link: {
     padding: 0,
     background: 'none',
@@ -37,24 +28,17 @@ const styles = {
     color: colors.primary,
     fontSize: '0.85rem',
   },
-  linkHover: {
-    textDecoration: 'underline',
-  },
 };
 
 function Button({ variant = 'default', style, ...props }) {
-  const [hovered, hoverHandlers] = useHover();
-
   return (
     <button
       type="button"
       style={{
         ...styles.base,
         ...styles[variant],
-        ...(hovered && styles[`${variant}Hover`]),
         ...style,
       }}
-      {...hoverHandlers}
       {...props}
     />
   );
