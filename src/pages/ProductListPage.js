@@ -49,15 +49,15 @@ function ProductListPage() {
   // functions
 
   // get product api's
-  const loadProducts = async () => {
-    try {
-      const productDetails = await getApiCaller(`/products?limit=10&skip=${(page - 1) * 10}`);
-      setProductDetails(productDetails);
-    } catch (e) {
-      console.log("get Product api callerr", e);
-    }
-  };
   useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const productDetails = await getApiCaller(`/products?limit=10&skip=${(page - 1) * 10}`);
+        setProductDetails(productDetails);
+      } catch (e) {
+        console.log("get Product api callerr", e);
+      }
+    };
     loadProducts();
   }, [page])
 
